@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/style.css" />
+    <title>Vite + TypeScript Starter</title>
+  </head>
+  <body>
+    <div id="app">
+      <canvas id="canvas"></canvas>
+      <div id="btn-container">
+        Try Actions methods :
+        <div class="btn" onclick="onPlayOnce()">playOnce</div>
+        <div class="btn" onclick="onPlayLoop()">playLoop</div>
+        <div class="btn" onclick="onPauseNextEnd()">pauseNextEnd</div>
+        <div class="btn" onclick="onPause()">pause</div>
+        <div class="btn" onclick="onStop()">stop</div>
+        <div class="btn" onclick="onResume()">resume</div>
+      </div>
+    
+      <a id="ref" href="https://fr.freepik.com/photos-vecteurs-libre/cadre">Artwork by ddraw</a>
+    
+      <div id="arrow-bloc">
+        <h1>Click on the arrows</h1>
+        <div id="arrows-container">
+          <div class="btn arrow" onmousedown="runLeft()" ontouchstart="runLeft()" onmouseup="stopRunning()" ontouchend="stopRunning()">🡄</div>
+          <div class="btn arrow" onmousedown="runRight()" ontouchstart="runRight()" onmouseup="stopRunning()" ontouchend="stopRunning()">🡆</div>
+        </div>
+      </div>
+    </div>
+    
+    <script type="module" src="/index.ts"></script>
+  </body>
+</html>
