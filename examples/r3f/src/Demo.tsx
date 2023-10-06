@@ -4,7 +4,7 @@ import {
     useFrame,
     useLoader,
 } from "@react-three/fiber";
-import { ActionSprite, makeActions } from "@three-sprite-mixer/core";
+import { SpriteMixer, makeActions } from "@three-sprite-mixer/core";
 import { useMemo, useRef } from "react";
 import { TextureLoader } from "three/src/loaders/TextureLoader.js";
 import { button, useControls } from "leva";
@@ -35,7 +35,7 @@ export const Demo = () => {
     );
 
     // Type-safe api
-    const ref = useRef<ActionSprite<typeof actions>>();
+    const ref = useRef<SpriteMixer<typeof actions>>();
 
     // UI
     useControls({
@@ -50,19 +50,19 @@ export const Demo = () => {
     // Update the animation
     useFrame((_, delta) => ref.current?.update(delta));
 
-    return <actionSprite ref={ref} args={[colorMap, 10, 2, actions]} />;
+    return <spriteMixer ref={ref} args={[colorMap, 10, 2, actions]} />;
 };
 
-// Allow <actionSprite /> to be used in JSX
-extend({ ActionSprite });
+// Allow <spriteMixer /> to be used in JSX
+extend({ SpriteMixer });
 
 // Make typescript happy about it
 declare global {
     namespace JSX {
         interface IntrinsicElements {
-            actionSprite: ReactThreeFiber.Object3DNode<
-                ActionSprite<any>,
-                typeof ActionSprite
+            spriteMixer: ReactThreeFiber.Object3DNode<
+                SpriteMixer<any>,
+                typeof SpriteMixer
             >;
         }
     }

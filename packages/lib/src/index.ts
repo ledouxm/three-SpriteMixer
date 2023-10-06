@@ -1,5 +1,5 @@
 import { makeActions } from "./actions";
-import { ActionSprite } from "./ActionSprite";
+import { SpriteMixer } from "./SpriteMixer";
 import type { Action } from "./types";
-export { makeActions, ActionSprite };
+export { makeActions, SpriteMixer };
 export type { Action };

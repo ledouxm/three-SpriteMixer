@@ -3,7 +3,7 @@ import { EventEmitter } from "./eventEmitter";
 import { makeApi } from "./actions";
 import type { ActionNames, Actions, Action, ActionApi } from "./types";
 
-export class ActionSprite<E> extends THREE.Sprite {
+export class SpriteMixer<E> extends THREE.Sprite {
     currentTile = 0;
     paused = true;
     currentDisplayTime = 0;
@@ -37,7 +37,10 @@ export class ActionSprite<E> extends THREE.Sprite {
         }, {} as any);
     }
 
-    on(type: "loop" | "finished", listener: (action: Action) => void) {
+    on(
+        type: "loop" | "finished",
+        listener: (action: Action & { name: ActionNames<E> }) => void
+    ) {
         this.eventEmitter.on(type, listener);
 
         return () => this.eventEmitter.off(type, listener);
@@ -57,7 +60,10 @@ export class ActionSprite<E> extends THREE.Sprite {
                 if (action.mustLoop) {
                     this.currentTile = action.indexStart;
 
-                    this.eventEmitter.dispatch("loop", { action });
+                    this.eventEmitter.dispatch("loop", {
+                        ...action,
+                        name: this.currentAction,
+                    });
                 } else {
                     this.currentTile = action.clampWhenFinished
                         ? action.indexEnd
@@ -66,7 +72,10 @@ export class ActionSprite<E> extends THREE.Sprite {
                     if (action.hideWhenFinished) this.visible = false;
                     this.paused = true;
 
-                    this.eventEmitter.dispatch("finished", { action });
+                    this.eventEmitter.dispatch("finished", {
+                        ...action,
+                        name: this.currentAction,
+                    });
                 }
             }
         }
