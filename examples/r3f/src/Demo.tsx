@@ -10,7 +10,7 @@ import { TextureLoader } from "three/src/loaders/TextureLoader.js";
 import { button, useControls } from "leva";
 
 export const Demo = () => {
-    const colorMap = useLoader(TextureLoader as any, "/spritesheet_2x10.png");
+    const texture = useLoader(TextureLoader as any, "/spritesheet_2x10.png");
 
     const actions = useMemo(
         () =>
@@ -50,7 +50,7 @@ export const Demo = () => {
     // Update the animation
     useFrame((_, delta) => ref.current?.update(delta));
 
-    return <spriteMixer ref={ref} args={[colorMap, 10, 2, actions]} />;
+    return <spriteMixer ref={ref} args={[texture, 10, 2, actions]} />;
 };
 
 // Allow <spriteMixer /> to be used in JSX

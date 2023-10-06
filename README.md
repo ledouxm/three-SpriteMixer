@@ -1,17 +1,23 @@
-# three-SpriteMixer
+# three-sprite-mixer
 
-Example : https://felixmariotto.github.io/from_indexed_texture
+This fork adds typesafety to SpriteMixer, along with an example of integration with R3F
 
 ### Mixing table to play sprite animations in Three.js
 
 The aim is to make 2D animations in Three.js simple : load the texture including the frames of your animation, give the animation's parameters, and you get an extended THREE.Sprite object, that you can use as a normal Sprite object, but also animate with SpriteMixer's functions.
 
-# How to use
+# Installation
+
+```
+pnpm install @three-sprite-mixer/core
+```
+
+# Usage
 
 ### Create an SpriteMixer and some actions :
 
 ```typescript
-import { makeActions, SpriteMixer } from "@three-sprite-mixer";
+import { makeActions, SpriteMixer } from "@three-sprite-mixer/core";
 
 // Declare actions for type-safety
 const actions = makeActions({
@@ -95,6 +101,64 @@ spriteMixer.setFrame(index);
 ```
 
 Set manually a frame of the animation. Frame indexing starts at 0.
+
+### Usage with React Three Fiber
+
+#### Setup
+
+```ts
+import { SpriteMixer } from "@three-sprite-mixer/core";
+import { extend } from "@react-three/fiber";
+
+// Allow <spriteMixer /> to be used in JSX
+extend({ SpriteMixer });
+
+// Make typescript happy about it
+declare global {
+    namespace JSX {
+        interface IntrinsicElements {
+            spriteMixer: ReactThreeFiber.Object3DNode<
+                SpriteMixer<any>,
+                typeof SpriteMixer
+            >;
+        }
+    }
+}
+```
+
+#### Usage
+
+```tsx
+// Actions declaration for type safety
+const actions = makeActions({
+    runLeft: {
+        indexEnd: 18,
+        indexStart: 10,
+        tileDisplayDuration: 40,
+        mustLoop: true,
+        clampWhenFinished: false,
+        hideWhenFinished: false,
+    },
+    runRight: {
+        indexEnd: 8,
+        indexStart: 0,
+        tileDisplayDuration: 40,
+        mustLoop: true,
+    },
+});
+
+export const Demo = () => {
+    const texture = useLoader(TextureLoader as any, "/spritesheet_2x10.png");
+
+    // Type-safe api
+    const ref = useRef<SpriteMixer<typeof actions>>();
+
+    // Update the animation
+    useFrame((_, delta) => ref.current?.update(delta));
+
+    return <spriteMixer ref={ref} args={[texture, 10, 2, actions]} />;
+};
+```
 
 ### The texture including tiles must be in this format :
 
