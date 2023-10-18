@@ -5,7 +5,7 @@ import {
     useLoader,
 } from "@react-three/fiber";
 import { SpriteMixer } from "@three-sprite-mixer/core";
-import { useMemo, useRef } from "react";
+import { useRef } from "react";
 import { TextureLoader } from "three/src/loaders/TextureLoader.js";
 import { button, useControls } from "leva";
 
