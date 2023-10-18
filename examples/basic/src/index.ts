@@ -1,8 +1,19 @@
 import * as THREE from "three";
-import { makeActions, SpriteMixer } from "@three-sprite-mixer/core";
+import { SpriteMixer } from "@three-sprite-mixer/core";
 
-// Declare actions if you want type-safety
-const actions = makeActions({
+const WIDTH = window.innerWidth;
+const HEIGHT = window.innerHeight;
+
+let renderer: THREE.Renderer = null;
+let scene: THREE.Scene = null;
+let camera: THREE.Camera = null;
+
+let running: "right" | "left" = null;
+let clock: THREE.Clock = null;
+
+let spriteMixer: SpriteMixer<typeof actions> = null;
+
+const actions = {
     runLeft: {
         indexEnd: 18,
         indexStart: 10,
@@ -17,18 +28,7 @@ const actions = makeActions({
         tileDisplayDuration: 40,
         mustLoop: true,
     },
-});
-
-let renderer: THREE.Renderer = null;
-let scene: THREE.Scene = null;
-let camera: THREE.Camera = null;
-
-let running: "right" | "left" = null;
-let spriteMixer: SpriteMixer<typeof actions> = null;
-let clock: THREE.Clock = null;
-
-const WIDTH = window.innerWidth;
-const HEIGHT = window.innerHeight;
+};
 
 window.addEventListener("load", () => {
     init();

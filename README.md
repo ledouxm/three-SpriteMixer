@@ -17,31 +17,28 @@ pnpm install @three-sprite-mixer/core
 ### Create an SpriteMixer and some actions :
 
 ```typescript
-import { makeActions, SpriteMixer } from "@three-sprite-mixer/core";
-
-// Declare actions for type-safety
-const actions = makeActions({
-    runLeft: {
-        indexStart: 10,
-        indexEnd: 18,
-        tileDisplayDuration: 40,
-        mustLoop: true,
-        // If set to true, animation will stop on last frame
-        // else animation will stop on first frame
-        clampWhenFinished: false,
-        // If set to true, sprite visibility will be set to false
-        hideWhenFinished: false,
-    },
-    runRight: {
-        indexStart: 0,
-        indexEnd: 8,
-        tileDisplayDuration: 40,
-        mustLoop: true,
-    },
-});
+import { SpriteMixer } from "@three-sprite-mixer/core";
 
 new THREE.TextureLoader().load("./spritesheet_2x10.png", (texture) => {
-    spriteMixer = new SpriteMixer(texture, 10, 2, actions);
+    spriteMixer = new SpriteMixer(texture, 10, 2, {
+        runLeft: {
+            indexStart: 10,
+            indexEnd: 18,
+            tileDisplayDuration: 40,
+            mustLoop: true,
+            // If set to true, animation will stop on last frame
+            // else animation will stop on first frame
+            clampWhenFinished: false,
+            // If set to true, sprite visibility will be set to false
+            hideWhenFinished: false,
+        },
+        runRight: {
+            indexStart: 0,
+            indexEnd: 8,
+            tileDisplayDuration: 40,
+            mustLoop: true,
+        },
+    });
 
     scene.add(spriteMixer);
 });
@@ -129,24 +126,6 @@ declare global {
 #### Usage
 
 ```tsx
-// Actions declaration for type safety
-const actions = makeActions({
-    runLeft: {
-        indexEnd: 18,
-        indexStart: 10,
-        tileDisplayDuration: 40,
-        mustLoop: true,
-        clampWhenFinished: false,
-        hideWhenFinished: false,
-    },
-    runRight: {
-        indexEnd: 8,
-        indexStart: 0,
-        tileDisplayDuration: 40,
-        mustLoop: true,
-    },
-});
-
 export const Demo = () => {
     const texture = useLoader(TextureLoader as any, "/spritesheet_2x10.png");
 
@@ -155,6 +134,23 @@ export const Demo = () => {
 
     // Update the animation
     useFrame((_, delta) => ref.current?.update(delta));
+
+    const actions = {
+        runLeft: {
+            indexEnd: 18,
+            indexStart: 10,
+            tileDisplayDuration: 40,
+            mustLoop: true,
+            clampWhenFinished: false,
+            hideWhenFinished: false,
+        },
+        runRight: {
+            indexEnd: 8,
+            indexStart: 0,
+            tileDisplayDuration: 40,
+            mustLoop: true,
+        },
+    };
 
     return <spriteMixer ref={ref} args={[texture, 10, 2, actions]} />;
 };

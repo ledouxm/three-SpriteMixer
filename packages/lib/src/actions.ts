@@ -1,12 +1,6 @@
 import { SpriteMixer } from "./SpriteMixer";
 import type { Action, ActionNames, Actions } from "./types";
 
-export const makeActions = <ActionDef extends Actions<any>>(
-    e: ActionDef
-): Actions<ActionDef> => {
-    return e;
-};
-
 export const makeApi = <E>(
     action: Action,
     sprite: SpriteMixer<E>,
