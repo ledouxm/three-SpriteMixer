@@ -37,7 +37,8 @@ jobs:
 
             - name: Install dependencies
               run: pnpm --filter @three-sprite-mixer/core install
-
+            - name: Authenticate with private NPM package
+              run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
             - name: Publish
               run: pnpm --filter @three-sprite-mixer/core publish
               env:
