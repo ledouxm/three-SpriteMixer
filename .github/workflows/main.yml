@@ -40,5 +40,5 @@ jobs:
 
             - name: Publish
               run: pnpm --filter @three-sprite-mixer/core publish
-                env:
-                    NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+              env:
+                  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
